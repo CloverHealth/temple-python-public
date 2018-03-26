@@ -3,8 +3,6 @@ import os
 import subprocess
 import tempfile
 
-import boto3
-import moto
 import pytest
 
 import deploy
