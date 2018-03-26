@@ -60,9 +60,9 @@ endif
 # Only make the virtualenv if it doesnt exist
 	@[ ! -e ~/.pyenv/versions/${PACKAGE_NAME} ] && pyenv virtualenv ${DEV_PYTHON_VERSION} ${PACKAGE_NAME} || :
 	pyenv local ${PACKAGE_NAME}
-ifdef PYTHON_VERSION
+ifdef DEV_PYTHON_VERSION
 # If the Python used for development has been upgraded, remove the virtualenv and recreate it
-	@[ `python --version | cut -f2 -d' '` != ${DEV_PYTHON_VERSION} ] && echo "Python has been upgraded since last setup. Recreating virtualenv" && pyenv uninstall -f ${PACKAGE_NAME} && pyenv virtualenv ${PYTHON_VERSION} ${PACKAGE_NAME} || :
+	@[ `python --version | cut -f2 -d' '` != ${DEV_PYTHON_VERSION} ] && echo "Python has been upgraded since last setup. Recreating virtualenv" && pyenv uninstall -f ${PACKAGE_NAME} && pyenv virtualenv ${DEV_PYTHON_VERSION} ${PACKAGE_NAME} || :
 endif
 
 	# Install all supported Python versions. There are more recent patch releases
