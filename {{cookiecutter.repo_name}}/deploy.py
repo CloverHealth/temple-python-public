@@ -72,8 +72,8 @@ def deploy(target):
         ).format(current_branch=current_branch))
 
     if target in ('PROD', 'TEST'):
-        pypi_username = os.getenv('{target}_PYPI_USERNAME'.format(target))
-        pypi_password = os.getenv('{target}_PYPI_PASSWORD'.format(target))
+        pypi_username = os.getenv('{target}_PYPI_USERNAME'.format(target=target))
+        pypi_password = os.getenv('{target}_PYPI_PASSWORD'.format(target=target))
     else:
         raise ValueError(
             "Deploy target must be 'PROD' or 'TEST', got {target!r}.".format(target=target))
