@@ -58,11 +58,11 @@ ifeq (${OS}, Darwin)
 endif
 
 # Only make the virtualenv if it doesnt exist
-	@[ ! -e ~/.pyenv/versions/${PACKAGE_NAME} ] && pyenv virtualenv ${DEV_PYTHON_VERSION} ${PACKAGE_NAME} || :
-	pyenv local ${PACKAGE_NAME}
+	@[ ! -e ~/.pyenv/versions/${MODULE_NAME} ] && pyenv virtualenv ${DEV_PYTHON_VERSION} ${MODULE_NAME} || :
+	pyenv local ${MODULE_NAME}
 ifdef DEV_PYTHON_VERSION
 # If the Python used for development has been upgraded, remove the virtualenv and recreate it
-	@[ `python --version | cut -f2 -d' '` != ${DEV_PYTHON_VERSION} ] && echo "Python has been upgraded since last setup. Recreating virtualenv" && pyenv uninstall -f ${PACKAGE_NAME} && pyenv virtualenv ${DEV_PYTHON_VERSION} ${PACKAGE_NAME} || :
+	@[ `python --version | cut -f2 -d' '` != ${DEV_PYTHON_VERSION} ] && echo "Python has been upgraded since last setup. Recreating virtualenv" && pyenv uninstall -f ${MODULE_NAME} && pyenv virtualenv ${DEV_PYTHON_VERSION} ${MODULE_NAME} || :
 endif
 
 	# Install all supported Python versions. There are more recent patch releases
@@ -76,7 +76,7 @@ endif
 	pyenv install -s 3.4.4
 
 	# Set up the dev env and the environments for Tox
-	pyenv local ${PACKAGE_NAME} 3.6.2 3.5.3 3.4.4
+	pyenv local ${MODULE_NAME} 3.6.2 3.5.3 3.4.4
 
 
 # Deactivates pyenv and removes it from auto-using the virtualenv
