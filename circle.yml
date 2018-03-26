@@ -1,0 +1,12 @@
+machine:
+  python:
+    version: 3.6.2
+
+dependencies:
+  override:
+    - make dependencies
+
+test:
+  override:
+    - make test
+
