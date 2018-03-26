@@ -1,11 +1,11 @@
 machine:
   python:
-    version: 3.6.4
+    version: 3.6.2
 
 dependencies:
   override:
     - make dependencies
-    - pyenv local 3.6.4 3.5.5 3.4.8
+    - pyenv local 3.6.2 3.5.3 3.4.4
 
 test:
   override:

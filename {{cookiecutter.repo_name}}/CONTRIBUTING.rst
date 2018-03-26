@@ -44,7 +44,7 @@ Releases and Versioning
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Anything that is merged into the {{cookiecutter.deploy_branch}} branch will be automatically deployed to PyPI.
-Documentation will be published to `ReadTheDocs <http://{{cookiecutter.package_name}}.readthedocs.io/>`__.
+Documentation will be published to `ReadTheDocs <http://{{cookiecutter.repo_name}}.readthedocs.io/>`__.
 
 The following files will be generated and should *not* be edited by a user:
 

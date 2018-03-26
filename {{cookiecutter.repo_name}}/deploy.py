@@ -72,8 +72,8 @@ def deploy(target):
         ).format(current_branch=current_branch))
 
     if target in ('PROD', 'TEST'):
-        pypi_username = os.getenv(f'{target}_PYPI_USERNAME')
-        pypi_password = os.getenv(f'{target}_PYPI_PASSWORD')
+        pypi_username = os.getenv('{target}_PYPI_USERNAME'.format(target))
+        pypi_password = os.getenv('{target}_PYPI_PASSWORD'.format(target))
     else:
         raise ValueError(
             "Deploy target must be 'PROD' or 'TEST', got {target!r}.".format(target=target))
@@ -99,14 +99,15 @@ def deploy(target):
     ret = _shell('make version', stdout=subprocess.PIPE)
     version = ret.stdout.decode('utf-8').strip()
 
-    print(f'Deploying version {version!r}...')
+    print('Deploying version {version!r}...'.format(version=version))
 
     # Tag the version
-    _shell(f'git tag -f -a {version} -m "Version {version}"')
+    _shell('git tag -f -a {version} -m "Version {version}"'.format(version=version))
 
     # Update the version
     _shell(
-        f'sed -i.bak "s/^__version__ = .*/__version__ = {version!r}/" */version.py')
+        'sed -i.bak "s/^__version__ = .*/__version__ = {version!r}/" */version.py'.format(
+            version=version))
 
     # Create a standard distribution and a wheel
     _shell('python setup.py sdist bdist_wheel')
@@ -124,7 +125,7 @@ def deploy(target):
     # Push the tag and AUTHORS / ChangeLog after successful PyPI deploy
     _shell('git push --follow-tags')
 
-    print(f'Deployment complete. Latest version is {version}.')
+    print('Deployment complete. Latest version is {version}.'.format(version=version))
 
 
 if __name__ == '__main__':  # pragma: no cover
