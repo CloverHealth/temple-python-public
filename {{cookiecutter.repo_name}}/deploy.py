@@ -66,20 +66,23 @@ def deploy(target):
 
     current_branch = os.getenv('CIRCLE_BRANCH')
     if (target == 'PROD') and (current_branch != 'master'):
-        raise EnvironmentError(
-            f'Refusing to deploy to production from branch {current_branch!r}. '
-            f'Production deploys can only be made from master.')
+        raise EnvironmentError((
+            'Refusing to deploy to production from branch {current_branch!r}. '
+            'Production deploys can only be made from master.'
+        ).format(current_branch=current_branch))
 
     if target in ('PROD', 'TEST'):
         pypi_username = os.getenv(f'{target}_PYPI_USERNAME')
         pypi_password = os.getenv(f'{target}_PYPI_PASSWORD')
     else:
-        raise ValueError(f"Deploy target must be 'PROD' or 'TEST', got {target!r}.")
+        raise ValueError(
+            "Deploy target must be 'PROD' or 'TEST', got {target!r}.".format(target=target))
 
     if not (pypi_username and pypi_password):  # pragma: no cover
-        raise EnvironmentError(
-            f"Missing '{target}_PYPI_USERNAME' and/or '{target}_PYPI_PASSWORD' "
-            f"environment variables. These are required to push to PyPI.")
+        raise EnvironmentError((
+            "Missing '{target}_PYPI_USERNAME' and/or '{target}_PYPI_PASSWORD' "
+            "environment variables. These are required to push to PyPI."
+        ).format(target=target))
 
     # Twine requires these environment variables to be set. Subprocesses will
     # inherit these when we invoke them, so no need to pass them on the command

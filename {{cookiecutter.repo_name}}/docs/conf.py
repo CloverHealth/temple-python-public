@@ -56,9 +56,9 @@ master_doc = 'toc'
 default_role = 'any'
 
 # General information about the project.
-project = u'{{cookiecutter.repo_name}}'
-copyright = u'2017, Clover Health'
-author = u'Clover Health'
+project = '{{cookiecutter.repo_name}}'
+copyright = '2017, Clover Health'
+author = 'Clover Health'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -139,8 +139,8 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [(
     master_doc,
-    'cookiecutterrepo_name.tex', u'{{cookiecutter.repo_name}} Documentation',
-    u'Clover Health', 'manual'
+    'cookiecutterrepo_name.tex', '{{cookiecutter.repo_name}} Documentation',
+    'Clover Health', 'manual'
 )]
 
 
@@ -149,7 +149,7 @@ latex_documents = [(
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'cookiecutterrepo_name', u'{{cookiecutter.repo_name}} Documentation',
+    (master_doc, 'cookiecutterrepo_name', '{{cookiecutter.repo_name}} Documentation',
      [author], 1)
 ]
 
@@ -160,13 +160,13 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'cookiecutterrepo_name', u'{{cookiecutter.repo_name}} Documentation',
+    (master_doc, 'cookiecutterrepo_name', '{{cookiecutter.repo_name}} Documentation',
      author, 'cookiecutterrepo_name', 'One line description of project.',
      'Miscellaneous'),
 ]
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
 
 
 def setup(app):
