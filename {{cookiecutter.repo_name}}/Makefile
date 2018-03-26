@@ -28,7 +28,7 @@ PIP_INSTALL_CMD=pip install -q
 # Do local installs without editable mode because of issues with CircleCI's venv
 PIP_LOCAL_INSTALL_CMD=pip install -q .
 else
-DEV_PYTHON_VERSION=3.6.4
+DEV_PYTHON_VERSION=3.6.2
 TOX_POSARGS=
 PIP_INSTALL_CMD=pip install
 PIP_LOCAL_INSTALL_CMD=pip install -e .
@@ -72,11 +72,11 @@ endif
 	# If you don't have these installed yet it's going to take a long time, but
 	# you'll only need to do it once.
 	pyenv install -s 3.6.2
-	pyenv install -s 3.5.2
+	pyenv install -s 3.5.3
 	pyenv install -s 3.4.4
 
 	# Set up the dev env and the environments for Tox
-	pyenv local ${PACKAGE_NAME} 3.6.4 3.5.5 3.4.8
+	pyenv local ${PACKAGE_NAME} 3.6.2 3.5.3 3.4.4
 
 
 # Deactivates pyenv and removes it from auto-using the virtualenv
