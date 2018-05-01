@@ -29,7 +29,7 @@ def test_deploy(mocker):
     deploy.deploy('PROD')
 
     assert mock_shell.call_args_list == [
-        mocker.call('git config --global user.email "dev@cloverhealth.com"'),
+        mocker.call('git config --global user.email "oss@cloverhealth.com"'),
         mocker.call('git config --global user.name "Circle CI"'),
         mocker.call('git config push.default current'),
         mocker.call('make version', stdout=subprocess.PIPE),
