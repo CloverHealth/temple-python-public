@@ -3,5 +3,7 @@
     "module_name": "{{ cookiecutter.repo_name.lower().replace('-', '_') }}",
     "short_description": null,
     "deploy_branch": "master",
+    "support_email": "oss@cloverhealth.com",
+    "year": "{% now 'utc', '%Y' %}",
     "_extensions": ["jinja2_time.TimeExtension"]
 }

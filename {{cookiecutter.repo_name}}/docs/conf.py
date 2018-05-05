@@ -57,7 +57,7 @@ default_role = 'any'
 
 # General information about the project.
 project = '{{cookiecutter.repo_name}}'
-copyright = '2017, Clover Health'
+copyright = '{{cookiecutter.year}}, Clover Health'
 author = 'Clover Health'
 
 # The version info for the project you're documenting, acts as replacement for
