@@ -15,7 +15,7 @@ OS = $(shell uname -s)
 REPO_NAME=temple-python-public
 
 ifdef CIRCLECI
-TEST_COMMAND=pytest --junitxml=$(CIRCLE_TEST_REPORTS)/$(REPO_NAME)/junit.xml
+TEST_COMMAND=pytest --junitxml=${TEST_REPORTS}/junit.xml
 # Use CircleCIs version
 PYTHON_VERSION=
 PIP_INSTALL_CMD=pip install -q
