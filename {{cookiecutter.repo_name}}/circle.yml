@@ -1,23 +1,70 @@
-machine:
-  python:
-    version: 3.6.2
+version: 2
+aliases:
+  - &docker_image circleci/python:3.6.3-stretch
+  - &dependencies
+    name: Install pyenv and install dependencies
+    command: |
+      python3 -m venv ~/venv
+      echo ". ~/venv/bin/activate" >> $BASH_ENV
+      source $BASH_ENV
+      make dependencies
+      curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+      pyenv update
+      pyenv local 3.7 3.6 3.5 3.4
+jobs:
+  temple_check:
+    docker:
+      - image: *docker_image
+    steps:
+      - checkout
+      - run:
+          <<: *dependencies
+      - run: temple update --check
+  lint:
+    docker:
+      - image: *docker_image
+    steps:
+      - checkout
+      - run:
+          <<: *dependencies
+      - run: make validate
+  test:
+    docker:
+      - image: *docker_image
+    environment:
+      TEST_REPORTS: /tmp/test-reports
+    steps:
+      - checkout
+      - run:
+          <<: *dependencies
+      - run: make test
+      - store_test_results:
+           path: /tmp/test-reports
+      - store_artifacts:
+           path: /tmp/test-reports
+  deploy:
+    docker:
+      - image: *docker_image
+    steps:
+      - checkout
+      - run:
+          <<: *dependencies
+      - run: pip install -q -r deploy_requirements.txt
+      - run: python3 deploy.py prod
 
-dependencies:
-  override:
-    - make dependencies
-    - pyenv local 3.6.2 3.5.3 3.4.4
-
-test:
-  override:
-    # Ensure package is always up to date with latest template
-    - temple update --check
-    - make validate
-    - make test
-
-deployment:
-  production:
-    branch: master
-    owner: CloverHealth
-    commands:
-      - pip3 install -r deploy_requirements.txt
-      - python3 deploy.py prod
+workflows:
+  version: 2
+  checks_and_deploy:
+    jobs:
+      - temple_check
+      - lint
+      - test
+      - deploy:
+          requires:
+            - temple_check
+            - lint
+            - test
+          filters:
+            branches:
+              only:
+                - {{cookiecutter.deploy_branch}}

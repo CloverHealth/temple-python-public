@@ -20,7 +20,7 @@ OS = $(shell uname -s)
 MODULE_NAME={{cookiecutter.module_name}}
 
 ifdef CIRCLECI
-TOX_POSARGS=-- --junitxml={env:CIRCLE_TEST_REPORTS}/{{cookiecutter.module_name}}/junit.xml
+TOX_POSARGS=-- --junitxml={env:TEST_REPORTS}/junit.xml
 # Use CircleCIs version
 PYTHON_VERSION=
 # Dont log pip install output since it can print the private repo url
