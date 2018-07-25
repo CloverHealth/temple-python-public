@@ -1,16 +1,25 @@
 version: 2
 aliases:
-  - &docker_image circleci/python:3.6.3-stretch
+  - &docker_image circleci/python:3.6-stretch
   - &dependencies
-    name: Install pyenv and install dependencies
+    name: Make virtualenv and install dependencies
     command: |
       python3 -m venv ~/venv
       echo ". ~/venv/bin/activate" >> $BASH_ENV
       source $BASH_ENV
       make dependencies
-      curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-      pyenv update
-      pyenv local 3.7 3.6 3.5 3.4
+  - &test_boilerplate
+    environment:
+      TEST_REPORTS: /tmp/test-reports
+    steps:
+      - checkout
+      - run:
+          <<: *dependencies
+      - run: make test
+      - store_test_results:
+           path: /tmp/test-reports
+      - store_artifacts:
+           path: /tmp/test-reports
 jobs:
   temple_check:
     docker:
@@ -28,20 +37,18 @@ jobs:
       - run:
           <<: *dependencies
       - run: make validate
-  test:
+  test_py35:
     docker:
-      - image: *docker_image
-    environment:
-      TEST_REPORTS: /tmp/test-reports
-    steps:
-      - checkout
-      - run:
-          <<: *dependencies
-      - run: make test
-      - store_test_results:
-           path: /tmp/test-reports
-      - store_artifacts:
-           path: /tmp/test-reports
+      - image: circleci/python:3.5-stretch
+    <<: *test_boilerplate
+  test_py36:
+    docker:
+      - image: circleci/python:3.6-stretch
+    <<: *test_boilerplate
+  test_py37:
+    docker:
+      - image: circleci/python:3.7-stretch
+    <<: *test_boilerplate
   deploy:
     docker:
       - image: *docker_image
@@ -58,13 +65,17 @@ workflows:
     jobs:
       - temple_check
       - lint
-      - test
+      - test_py35
+      - test_py36
+      - test_py37
       - deploy:
           requires:
             - temple_check
             - lint
-            - test
+            - test_py35
+            - test_py36
+            - test_py37
           filters:
             branches:
               only:
-                - {{cookiecutter.deploy_branch}}
+                - master
